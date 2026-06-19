@@ -22,3 +22,4 @@ onnx
 onnxruntime
 celery
 prometheus-fastapi-instrumentator
+boto3
