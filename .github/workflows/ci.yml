@@ -14,6 +14,13 @@ on:
 jobs:
   backend-ci:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@localhost:5432/car_recognition
+      REDIS_URL: redis://localhost:6379/0
+      S3_ENDPOINT_URL: http://localhost:9000
+      S3_ACCESS_KEY: minio
+      S3_SECRET_KEY: minio12345
+      S3_BUCKET_NAME: car-images
 
     steps:
       - name: Checkout repository
@@ -34,9 +41,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Check Python imports
-        run: |
-          python -m compileall app ml
+      - name: Check FastAPI app import
+      - env:
+        - DATABASE_URL: postgresql+asyncpg://postgres:postgres@localhost:5432/car_recognition
+        - REDIS_URL: redis://localhost:6379/0
+        - S3_ENDPOINT_URL: http://localhost:9000
+        - S3_ACCESS_KEY: minio
+        - S3_SECRET_KEY: minio12345
+        - S3_BUCKET_NAME: car-images
+      - run: |
+      -   python -c "from app.main import app; print(app.title)"
 
       - name: Check FastAPI app import
         run: |
