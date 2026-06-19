@@ -21,3 +21,4 @@ redis
 onnx
 onnxruntime
 celery
+prometheus-fastapi-instrumentator

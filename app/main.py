@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from app.api.routes.auth import router as auth_router
 from app.api.routes.prediction import router as prediction_router
 from app.api.routes.users import router as users_router
+from prometheus_fastapi_instrumentator import Instrumentator
 
 app = FastAPI(
     title="Car Recognition API",
@@ -13,6 +14,8 @@ app = FastAPI(
 app.include_router(auth_router)
 app.include_router(users_router)
 app.include_router(prediction_router)
+
+Instrumentator().instrument(app).expose(app)
 
 
 @app.get("/health")

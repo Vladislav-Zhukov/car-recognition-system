@@ -13,6 +13,7 @@ from app.core.celery_app import celery_app
 from app.tasks import predict_car_task
 from app.schemas.prediction import PredictionHistoryItem, PredictionResponse
 from app.services.prediction_service import car_prediction_service
+from app.services.storage_service import storage_service
 from ml.core.config import MODEL_NAME, MODEL_VERSION, UPLOAD_DIR
 from celery.result import AsyncResult
 
@@ -41,8 +42,16 @@ async def predict_car(
     UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
     file_path = UPLOAD_DIR / filename
 
+    file_bytes = await file.read()
+
+    object_key = storage_service.upload_bytes(
+        file_bytes=file_bytes,
+        filename=filename,
+        content_type=file.content_type,
+    )
+
     with open(file_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
+        buffer.write(file_bytes)
 
     predictions = car_prediction_service.predict(file_path)
     top_prediction = predictions[0]
