@@ -1,0 +1,48 @@
+# Git
+.git/
+.github/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual env
+.venv/
+venv/
+env/
+
+# Environment
+.env
+.env.*
+
+# IDE
+.idea/
+.vscode/
+
+# Dataset and uploads
+dataset/
+uploads/
+
+# ML artifacts
+trained_models/
+*.pt
+*.pth
+*.onnx
+
+# Reports
+reports/
+
+# Logs/cache
+*.log
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test images
+test.jpg
