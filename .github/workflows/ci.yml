@@ -52,10 +52,6 @@ jobs:
       - run: |
       -   python -c "from app.main import app; print(app.title)"
 
-      - name: Check FastAPI app import
-        run: |
-          python -c "from app.main import app; print(app.title)"
-
       - name: Build Docker image
         run: |
           docker build -t car-recognition-system .
