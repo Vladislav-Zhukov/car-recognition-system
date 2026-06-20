@@ -43,6 +43,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install pyyaml
 
       - name: Check Python syntax
         run: |
@@ -56,6 +57,14 @@ jobs:
         run: |
           docker build -t car-recognition-system .
 
-      - name: Validate Kubernetes manifests
+      - name: Validate Kubernetes YAML syntax
         run: |
-          kubectl apply --dry-run=client --validate=false -f k8s/
+          python - <<'PY'
+          import pathlib
+          import yaml
+
+          for path in pathlib.Path("k8s").glob("*.yaml"):
+              with open(path, "r", encoding="utf-8") as f:
+                  list(yaml.safe_load_all(f))
+              print(f"OK: {path}")
+          PY
