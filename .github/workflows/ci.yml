@@ -53,6 +53,10 @@ jobs:
         run: |
           python -c "from app.main import app; print(app.title)"
 
+      - name: Run tests
+        run: |
+          pytest -v
+
       - name: Build Docker image
         run: |
           docker build -t car-recognition-system .
