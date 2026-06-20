@@ -22,6 +22,7 @@ env/
 # Testing
 .pytest_cache/
 .coverage
+.coverage.*
 htmlcov/
 
 # Type checking
@@ -41,19 +42,22 @@ dist/
 # Alembic
 alembic/versions/__pycache__/
 
-# Uploaded files
+# Uploads
 uploads/
 
-# ML artifacts
+# Models
 trained_models/
 *.pt
 *.pth
 *.onnx
 
-# Dataset
+# Datasets
 dataset/
 
-# Reports (если генерируются автоматически)
+# MLflow
+mlruns/
+
+# Reports
 reports/*.png
 reports/*.jpg
 reports/*.jpeg
@@ -62,7 +66,13 @@ reports/*.jpeg
 *.db
 *.sqlite3
 
-# OS files
+# Docker
+docker-compose.override.yml
+
+# Kubernetes
+*.bak
+
+# OS
 .DS_Store
 Thumbs.db
 
