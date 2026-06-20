@@ -27,3 +27,6 @@ arq
 prometheus-client
 taskiq
 taskiq-redis
+pytest
+pytest-asyncio
+httpx
