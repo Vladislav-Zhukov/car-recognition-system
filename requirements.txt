@@ -23,3 +23,7 @@ onnxruntime
 celery
 prometheus-fastapi-instrumentator
 boto3
+arq
+prometheus-client
+taskiq
+taskiq-redis

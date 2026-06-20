@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  namespace: car-recognition
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+
+  template:
+    metadata:
+      labels:
+        app: api
+
+    spec:
+      containers:
+        - name: api
+          image: car-recognition-system:latest
+          imagePullPolicy: IfNotPresent
+
+          command:
+            - uvicorn
+            - app.main:app
+            - --host
+            - 0.0.0.0
+            - --port
+            - "8000"
+
+          ports:
+            - containerPort: 8000
+
+          envFrom:
+            - secretRef:
+                name: car-recognition-secret
+
+          env:
+            - name: S3_ENDPOINT_URL
+              value: http://minio:9000
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "1Gi"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api
+  namespace: car-recognition
+
+spec:
+  type: NodePort
+  selector:
+    app: api
+
+  ports:
+    - port: 8000
+      targetPort: 8000
+      nodePort: 30080

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: celery-worker
+  namespace: car-recognition
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: celery-worker
+
+  template:
+    metadata:
+      labels:
+        app: celery-worker
+
+    spec:
+      containers:
+        - name: celery-worker
+          image: car-recognition-system:latest
+          imagePullPolicy: IfNotPresent
+
+          command:
+            - celery
+            - -A
+            - app.tasks
+            - worker
+            - --loglevel=info
+
+          envFrom:
+            - secretRef:
+                name: car-recognition-secret
+
+          env:
+            - name: S3_ENDPOINT_URL
+              value: http://minio:9000

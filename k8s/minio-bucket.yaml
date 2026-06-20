@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: minio-create-bucket
+  namespace: car-recognition
+
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+
+      containers:
+        - name: minio-create-bucket
+          image: minio/mc
+
+          command:
+            - /bin/sh
+            - -c
+            - |
+              mc alias set local http://minio:9000 minio minio12345
+              mc mb -p local/car-images
