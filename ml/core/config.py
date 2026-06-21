@@ -13,7 +13,7 @@ TRAIN_DIR = DATASET_DIR / "train"
 VAL_DIR = DATASET_DIR / "test"
 
 MODEL_DIR = BASE_DIR / "trained_models"
-MODEL_PATH = MODEL_DIR / "car_model.pt"
+MODEL_PATH = MODEL_DIR / "fair_efficientnet_100.pt"
 
 FAIR_EPOCHS = 100
 

@@ -354,7 +354,6 @@ trained_models/
 
 Example models:
 
-* car_model.pt
 * fair_custom_cnn_100.pt
 * fair_efficientnet_100.pt
 
