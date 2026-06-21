@@ -359,6 +359,55 @@ Example models:
 
 ---
 
+## Model Performance
+
+The project includes two trained classification models.
+
+| Model           |  Epochs  | Best Validation Accuracy |
+|-----------------|----------|--------------------------|
+| EfficientNet-B0 |   500    | 70.80%                   |
+| Custom CNN      |   500    | 34.06%                   |
+
+### Comparison
+
+* EfficientNet-B0 achieved the highest validation accuracy.
+* Custom CNN provides a simpler architecture and faster experimentation.
+
+### Conclusion
+
+EfficientNet-B0 achieved higher validation accuracy and was selected as the primary production model.
+
+Current production model:
+
+```text
+trained_models/fair_efficientnet_100.pt
+```
+
+---
+
+## Training
+
+Train both models sequentially and save logs:
+
+```bash
+python -m ml.training.train_fair_efficientnet 2>&1 | Tee-Object reports\efficientnet_train.log; python -m ml.training.train_fair_custom_cnn 2>&1 | Tee-Object reports\custom_cnn_train.log
+```
+
+Training logs will be saved to:
+
+EfficientNet-B0:
+```text
+reports/efficientnet_train.log
+```
+
+Custom CNN:
+
+```text
+reports/custom_cnn_train.log
+```
+
+---
+
 ## Testing
 
 Automated API tests implemented with:
@@ -419,8 +468,4 @@ GitHub Actions workflow performs:
 
 ---
 
-## Author
-
-Vladislav Zhukov
-
-Portfolio project for Python Backend / AI Backend Engineer positions.
+Project for Python Backend / AI Backend Engineer positions.

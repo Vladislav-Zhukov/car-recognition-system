@@ -15,7 +15,6 @@ VAL_DIR = DATASET_DIR / "test"
 MODEL_DIR = BASE_DIR / "trained_models"
 MODEL_PATH = MODEL_DIR / "fair_efficientnet_100.pt"
 
-FAIR_EPOCHS = 100
 
 FAIR_EFFICIENTNET_MODEL_PATH = MODEL_DIR / "fair_efficientnet_100.pt"
 FAIR_CUSTOM_CNN_MODEL_PATH = MODEL_DIR / "fair_custom_cnn_100.pt"
@@ -25,7 +24,7 @@ UPLOAD_DIR = BASE_DIR / "uploads"
 
 IMAGE_SIZE = 224
 BATCH_SIZE = 16
-EPOCHS = 100
+FAIR_EPOCHS = 35
 LEARNING_RATE = 0.001
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
