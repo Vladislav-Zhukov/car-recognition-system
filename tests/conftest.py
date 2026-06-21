@@ -6,6 +6,8 @@ from app.main import app
 
 @pytest.fixture
 async def client():
+    app.dependency_overrides.clear()
+
     transport = ASGITransport(app=app)
 
     async with AsyncClient(
@@ -13,3 +15,5 @@ async def client():
         base_url="http://test",
     ) as async_client:
         yield async_client
+
+    app.dependency_overrides.clear()

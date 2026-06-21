@@ -1,41 +1,14 @@
 import pytest
 
-from datetime import datetime
 from app.api.routes.auth import get_db
-from app.db.models import User
 from app.core.security import create_refresh_token, hash_password
-
-
-class FakeResult:
-    def __init__(self, value):
-        self.value = value
-
-    def scalar_one_or_none(self):
-        return self.value
-
-
-class FakeSession:
-    def __init__(self, existing_user=None):
-        self.existing_user = existing_user
-        self.added_user = None
-
-    async def execute(self, query):
-        return FakeResult(self.existing_user)
-
-    def add(self, user):
-        self.added_user = user
-
-    async def commit(self):
-        pass
-
-    async def refresh(self, user):
-        user.id = 1
-        user.created_at = datetime.utcnow()
+from app.db.models import User
+from tests.mocks import FakeSession
 
 
 @pytest.mark.asyncio
 async def test_register_user_success(client):
-    fake_db = FakeSession(existing_user=None)
+    fake_db = FakeSession(result_value=None)
 
     async def override_get_db():
         yield fake_db
@@ -65,7 +38,7 @@ async def test_register_existing_user(client):
         password_hash="hashed",
     )
 
-    fake_db = FakeSession(existing_user=existing_user)
+    fake_db = FakeSession(result_value=existing_user)
 
     async def override_get_db():
         yield fake_db
@@ -94,7 +67,7 @@ async def test_login_success(client):
         password_hash=hash_password("test1234"),
     )
 
-    fake_db = FakeSession(existing_user=existing_user)
+    fake_db = FakeSession(result_value=existing_user)
 
     async def override_get_db():
         yield fake_db
@@ -128,7 +101,7 @@ async def test_login_wrong_password(client):
         password_hash=hash_password("correct_password"),
     )
 
-    fake_db = FakeSession(existing_user=existing_user)
+    fake_db = FakeSession(result_value=existing_user)
 
     async def override_get_db():
         yield fake_db
